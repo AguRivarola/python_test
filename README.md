@@ -7,5 +7,5 @@ Python simple api with ENV variable lecture and CI/CD to deploy dockerized in AW
 python -m venv py_api
 source py_api/Scripts/Activate
 pip install fastapi uvicorn python-dotenv
-
+pip freeze > requirements.txt
 ```
