@@ -73,8 +73,7 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        touch .env
-        echo environment=${{ env.BRANCH_NAME }} >> .env
+        echo enviroment=${{ env.BRANCH_NAME }} >> .env
         cat .env
         docker build -t 211125482582.dkr.ecr.us-west-2.amazonaws.com/prueba:latest .
         docker push 211125482582.dkr.ecr.us-west-2.amazonaws.com/prueba:latest
