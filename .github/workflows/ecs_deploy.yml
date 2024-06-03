@@ -28,16 +28,16 @@ name: Deploy to Amazon ECS
 
 on:
   push:
-    branches: [ "development", "test" ]
+    branches: [ "development" , "testing" ]
 
 env:
   AWS_REGION: us-west-2                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: 211125482582.dkr.ecr.us-west-2.amazonaws.com/prueba # set this to your Amazon ECR repository name
-  ECS_SERVICE: ApiTest                 # set this to your Amazon ECS service name
-  ECS_CLUSTER: test2                 # set this to your Amazon ECS cluster name
+  ECR_REPOSITORY: 211125482582.dkr.ecr.us-west-2.amazonaws.com/general # set this to your Amazon ECR repository name
+  ECS_SERVICE: app_service                 # set this to your Amazon ECS service name
+  ECS_CLUSTER: DevCluster                 # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: .aws/skeleton.json # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: testConteiner2           # set this to the name of the container in the
+  CONTAINER_NAME: app_container           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
 permissions:
   contents: read
@@ -74,10 +74,9 @@ jobs:
         # push it to ECR so that it can
         # be deployed to ECS.
         echo enviroment=${{ env.BRANCH_NAME }} >> .env
-        cat .env
-        docker build -t 211125482582.dkr.ecr.us-west-2.amazonaws.com/prueba:latest .
-        docker push 211125482582.dkr.ecr.us-west-2.amazonaws.com/prueba:latest
-        echo "image=211125482582.dkr.ecr.us-west-2.amazonaws.com/prueba:latest" >> $GITHUB_OUTPUT
+        docker build -t 211125482582.dkr.ecr.us-west-2.amazonaws.com/general:${{IMAGE_TAG}} -t 211125482582.dkr.ecr.us-west-2.amazonaws.com/general:${{ env.BRANCH_NAME }} .
+        docker push --all-tags 211125482582.dkr.ecr.us-west-2.amazonaws.com/prueba 
+        echo "image=211125482582.dkr.ecr.us-west-2.amazonaws.com/prueba:${{ env.BRANCH_NAME }}" >> $GITHUB_OUTPUT
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
