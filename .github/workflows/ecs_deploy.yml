@@ -75,8 +75,8 @@ jobs:
         # be deployed to ECS.
         echo enviroment=${{ env.BRANCH_NAME }} >> .env
         docker build -t 211125482582.dkr.ecr.us-west-2.amazonaws.com/general:${{ env.IMAGE_TAG }} -t 211125482582.dkr.ecr.us-west-2.amazonaws.com/general:${{ env.BRANCH_NAME }} .
-        docker push --all-tags 211125482582.dkr.ecr.us-west-2.amazonaws.com/prueba 
-        echo "image=211125482582.dkr.ecr.us-west-2.amazonaws.com/prueba:${{ env.BRANCH_NAME }}" >> $GITHUB_OUTPUT
+        docker push --all-tags 211125482582.dkr.ecr.us-west-2.amazonaws.com/general 
+        echo "image=211125482582.dkr.ecr.us-west-2.amazonaws.com/general:${{ env.BRANCH_NAME }}" >> $GITHUB_OUTPUT
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
